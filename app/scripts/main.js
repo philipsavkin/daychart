@@ -96,7 +96,7 @@ function drawChart(canvas, dateData) {
         max = Math.max.apply(null, data),
         multiplier = chartProps.maxHeight * 0.9 / Math.abs(max - min);
 
-    var xstep, i, e, monthWidth, monthX;
+    var xstep, i, e, monthWidth, monthNameWidth, monthX;
 
     function lineTo(x, y) { ctx.lineTo(x + chartProps.xoffset, y + chartProps.yoffset); }
 
@@ -112,7 +112,7 @@ function drawChart(canvas, dateData) {
         var d, y;
         for (d = step; condition(d, step); d += step) {
             y = chartProps.yoffset - d * multiplier;
-            ctx.strokeText(formatTime(d), 0, y);
+            ctx.fillText(formatTime(d), 0, y);
             ctx.moveTo(chartProps.xoffset - 2, y);
             ctx.lineTo(chartProps.maxWidth, y);
         }
@@ -122,22 +122,24 @@ function drawChart(canvas, dateData) {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // setup context
-    ctx.font = '9px Arial';
+    ctx.font = '9px sans-serif';
     ctx.textBaseline = 'middle';
 
     // draw grid
     ctx.beginPath();
     ctx.lineWidth = 1.0;
-    ctx.strokeStyle = '#888888';
+    ctx.strokeStyle = '#888';
+    ctx.fillStyle = '#888';
     ctx.moveTo(chartProps.xoffset, 0);
     ctx.lineTo(chartProps.xoffset, chartProps.maxHeight);
     ctx.moveTo(chartProps.xoffset - 5, chartProps.yoffset);
     lineTo(chartProps.maxWidth, 0);
-    ctx.strokeText('0', 0, chartProps.yoffset);
+    ctx.fillText('0', 0, chartProps.yoffset);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.strokeStyle = '#cccccc';
+    ctx.strokeStyle = '#ccc';
+    ctx.fillStyle = '#888';
 
     drawGrid(chartProps.gridStep,  function (d, step) { return d < (max + step); });
     drawGrid(-chartProps.gridStep, function (d, step) { return d > (min + step); });
@@ -166,14 +168,19 @@ function drawChart(canvas, dateData) {
     ctx.stroke();
 
     // draw months
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = '#000';
     monthX = chartProps.xoffset;
     for (i = 0; i < months.length; i++) {
         monthWidth = months[i].days * (chartProps.maxWidth - chartProps.xoffset) / data.length;
+        monthNameWidth = ctx.measureText(months[i].name).width; 
+
         ctx.fillStyle = months[i].fill;
         ctx.fillRect(monthX, chartProps.maxHeight + 5, monthWidth, 20);
-        ctx.strokeText(months[i].name, monthX, chartProps.maxHeight + 15);
+
+        ctx.fillStyle = '#000';
+        ctx.fillText(months[i].name,
+                monthX + (monthWidth - monthNameWidth) / 2,
+                chartProps.maxHeight + 16);
+
         monthX += monthWidth;
     }
 
