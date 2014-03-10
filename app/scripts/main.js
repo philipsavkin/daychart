@@ -188,10 +188,6 @@ function drawChart(canvas, dateData) {
     ctx.stroke();
 }
 
-function readCoord(str) {
-    return parseFloat(str);
-}
-
 function drawForCoords(lat, lon) {
     var data = getData(lat, lon),
         today = new Date(),
@@ -214,11 +210,6 @@ var map = new OpenLayers.Map({
     theme: null,
     controls: [
         new OpenLayers.Control.Navigation(),
-        new OpenLayers.Control.TouchNavigation({
-            dragPanOptions: {
-                enableKinetic: true
-            }
-        }),
         new OpenLayers.Control.Zoom()
     ],
     layers: [
@@ -240,15 +231,6 @@ map.events.register('click', map, function (e) {
     drawForCoords(point.lat, point.lon);
 });
 
-//$('#calc-btn').click(function () {
-//    var latitude = readCoord($('#inp-lat').val()),
-//        longitude = readCoord($('#inp-lon').val());
-//
-//    drawForCoords(latitude, longitude);
-//});
-
 drawForCoords(51.5, 0);
-
-
 
 });
