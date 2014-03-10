@@ -82,7 +82,7 @@ function drawChart(canvas, dateData) {
     var data = dateData.diffs;
     var ctx = canvas.getContext('2d');
 
-    var maxChartHeight = canvas.height - 40;
+    var maxChartHeight = canvas.height - 30;
     var chartProps = {
         maxWidth: canvas.width,
         maxHeight: maxChartHeight,
@@ -148,6 +148,8 @@ function drawChart(canvas, dateData) {
     xstep = (chartProps.maxWidth - chartProps.xoffset) / data.length;
 
     ctx.beginPath();
+    ctx.strokeStyle = '#00f';
+    ctx.lineWidth = 0.5;
     for (i = 0; i < dateData.events.length; i++) {
         e = chartProps.xoffset + xstep * dateData.events[i];
         ctx.moveTo(e, 0);
@@ -157,8 +159,7 @@ function drawChart(canvas, dateData) {
 
     // mark today's date
     ctx.beginPath();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#888888';
+    ctx.strokeStyle = '#f00';
     e = chartProps.xoffset + xstep * dateData.today;
     ctx.moveTo(e, 0);
     ctx.lineTo(e, chartProps.maxHeight);
@@ -171,8 +172,8 @@ function drawChart(canvas, dateData) {
     for (i = 0; i < months.length; i++) {
         monthWidth = months[i].days * (chartProps.maxWidth - chartProps.xoffset) / data.length;
         ctx.fillStyle = months[i].fill;
-        ctx.fillRect(monthX, chartProps.maxHeight + 20, monthWidth, 20);
-        ctx.strokeText(months[i].name, monthX, chartProps.maxHeight + 30);
+        ctx.fillRect(monthX, chartProps.maxHeight + 5, monthWidth, 20);
+        ctx.strokeText(months[i].name, monthX, chartProps.maxHeight + 15);
         monthX += monthWidth;
     }
 

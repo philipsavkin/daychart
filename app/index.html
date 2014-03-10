@@ -18,18 +18,20 @@
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/theme/default/style.css" />
     </head>
     <body>
-        <div class="container">
         <!--[if lt IE 9]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
         <header>
-            <h1>Daychart</h1>
+            <div class="container">
+                <h1>Daychart</h1>
+            </div>
         </header>
 
         <main>
-            <div class="row">
-                <canvas id="chart" width="800" height="300"></canvas>
-                <div class="point-info">
+            <div class="container">
+              <div class="row">
+                <canvas id="chart" width="750" height="300"></canvas>
+                <div class="right-column point-info">
                     <strong>Lat</strong><span id="lat-box"></span><br>
                     <strong>Lon</strong><span id="lon-box"></span><br>
                     <hr>
@@ -37,14 +39,26 @@
                     <strong>Sunrise</strong><span id="sunrise-box"></span><br>
                     <strong>Sunset</strong><span id="sunset-box"></span>
                 </div>
-            </div>
-            <div class="row">
+                <div class="right-column legend">
+                    <ul>
+                        <li><span class="blue">Blue</span> vertical bars - equinox and solstice</li>
+                        <li><span class="red">Red</span> vertical bar - today's date</li>
+                    </ul>
+                </div>
+              </div>
+
+              <div class="row">
                 <div id="map"></div>
+                <div class="right-column">&#8592; Click on the map to redraw the chart</div>
+              </div>
             </div>
+            <div id="main-footer"></div>
         </main>
 
         <footer>
-          <small>Footer!</footer>
+          <div class="container">
+            <small>Footer!</footer>
+          </div>
         </footer>
 
         <!-- build:js scripts/vendor.js -->
@@ -69,6 +83,5 @@
         <!-- build:js({app,.tmp}) scripts/main.js -->
         <script src="scripts/main.js"></script>
         <!-- endbuild -->
-        </div>
     </body>
 </html>
