@@ -112,10 +112,8 @@ function drawChart(canvas, dateData) {
         var roundedTime = Math.round(Math.abs(time)),
             sign = (time < 0) ? '-' : '',
             mins = Math.floor(roundedTime / 60),
-            secs = Math.round(roundedTime - mins * 60),
-            result = sign + mins + ':' + ((secs < 10) ? '0' : '') + secs;
-
-        return result;
+            secs = Math.round(roundedTime - mins * 60);
+        return sign + mins + ':' + ((secs < 10) ? '0' : '') + secs;
     }
 
     function drawValueBar(val) {
@@ -228,12 +226,13 @@ var map = new OpenLayers.Map({
     theme: null,
     controls: [
         new OpenLayers.Control.Navigation(),
-        new OpenLayers.Control.Zoom()
+        new OpenLayers.Control.Zoom(),
+        new OpenLayers.Control.Attribution()
     ],
     layers: [
         new OpenLayers.Layer.OSM('OpenStreetMap', null, {
             transitionEffect: 'resize',
-            attribution: ''
+            attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         })
     ],
     center: startPoint,
