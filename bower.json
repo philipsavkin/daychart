@@ -5,7 +5,7 @@
     "jquery": "~2.1.0",
     "normalize.css": "~3.0.0",
     "suncalc": "*",
-    "openlayers": "~2.13.1"
+    "leaflet-dist": "~0.7.2"
   },
   "devDependencies": {}
 }

@@ -220,31 +220,18 @@ function drawForCoords(lat, lon) {
 
 //----------------- Main -----------------------
 // display map
-var startPoint = new OpenLayers.LonLat(0, 0);
-var map = new OpenLayers.Map({
-    div: 'map',
-    theme: null,
-    controls: [
-        new OpenLayers.Control.Navigation(),
-        new OpenLayers.Control.Zoom(),
-        new OpenLayers.Control.Attribution()
-    ],
-    layers: [
-        new OpenLayers.Layer.OSM('OpenStreetMap', null, {
-            transitionEffect: 'resize',
-            attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-        })
-    ],
-    center: startPoint,
-    zoom: 1
-});
+var map = new L.Map('map');
 
-var fromProjection = new OpenLayers.Projection('EPSG:900913'),
-    toProjection = new OpenLayers.Projection('EPSG:4326');
+map.addLayer(new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    minZoom: 2,
+    maxZoom: 12,
+    attribution: 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+}));
 
-map.events.register('click', map, function (e) {
-    var point = map.getLonLatFromViewPortPx(e.xy).transform(fromProjection, toProjection);
-    drawForCoords(point.lat, point.lon);
+map.setView([0, 0], 2);
+
+map.on('click', function (e) {
+    drawForCoords(e.latlng.lat, e.latlng.lng);
 });
 
 drawForCoords(55, 0);
@@ -252,6 +239,6 @@ drawForCoords(55, 0);
 $.get('http://ipinfo.io', function(response) {
     var coords = response.loc.split(',', 2);
     drawForCoords(parseFloat(coords[0]), parseFloat(coords[1]));
-}, "jsonp");
+}, 'jsonp');
 
 });
