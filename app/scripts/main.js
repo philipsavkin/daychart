@@ -30,20 +30,22 @@ var months = [
 
 function getData(lat, lon) {
 
+    function validDate(d) { return !isNaN(d.getTime()); }
+
     function dateDiffSecs(d1, d2) {
         return Math.round((d1.getTime() - d2.getTime()) / 1000);
     }
 
     var currYear = new Date().getFullYear(),
-        beginYearMillis = new Date(currYear, 0, 0, 0, 0, 0, 0).getTime(),
+        beginYearMillis = new Date(currYear, 0, 1, 0, 0, 0, 0).getTime(),
         days = 365 + (isLeapYear(currYear) ? 1 : 0),
         dates = [], durations = [], diffs = [], events = [],
         sunCalcData, dateStr, todayInd;
 
-    var springEquinox  = new Date(currYear, 2, 20).toDateString(),
-        summerSolstice = new Date(currYear, 5, 21).toDateString(),
-        autumnEquinox  = new Date(currYear, 8, 23).toDateString(),
-        winterSolstice = new Date(currYear, 11, 21).toDateString(),
+    var springEquinox  = new Date(currYear, 2, 20, 12).toDateString(),
+        summerSolstice = new Date(currYear, 5, 21, 12).toDateString(),
+        autumnEquinox  = new Date(currYear, 8, 23, 12).toDateString(),
+        winterSolstice = new Date(currYear, 11, 21, 12).toDateString(),
         today = new Date().toDateString();
 
     for (var i = 0; i < days; i++) {
@@ -60,8 +62,13 @@ function getData(lat, lon) {
         }
 
         sunCalcData = SunCalc.getTimes(dates[i], lat, lon);
-        console.log('sunset: ' + sunCalcData.sunset + ', sunrise: ' + sunCalcData.sunrise);
-        durations[i] = dateDiffSecs(sunCalcData.sunset, sunCalcData.sunrise);
+
+        if (validDate(sunCalcData.sunset) && validDate(sunCalcData.sunrise)) {
+            durations[i] = dateDiffSecs(sunCalcData.sunset, sunCalcData.sunrise);
+        } else {
+            durations[i] = 0;
+        }
+
         if (i > 0) {
             diffs[i] = durations[i] - durations[i - 1];
         }
@@ -174,7 +181,7 @@ function drawChart(canvas, dateData) {
     monthX = chartProps.xoffset;
     for (i = 0; i < months.length; i++) {
         monthWidth = months[i].days * (chartProps.maxWidth - chartProps.xoffset) / data.length;
-        monthNameWidth = ctx.measureText(months[i].name).width; 
+        monthNameWidth = ctx.measureText(months[i].name).width;
 
         ctx.fillStyle = months[i].fill;
         ctx.fillRect(monthX, chartProps.maxHeight + 5, monthWidth, 20);
