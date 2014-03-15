@@ -245,10 +245,14 @@ var fromProjection = new OpenLayers.Projection('EPSG:900913'),
 
 map.events.register('click', map, function (e) {
     var point = map.getLonLatFromViewPortPx(e.xy).transform(fromProjection, toProjection);
-    console.log('Coordinates: ' + point.lat + ', ' + point.lon);
     drawForCoords(point.lat, point.lon);
 });
 
-drawForCoords(51.5, 0);
+drawForCoords(55, 0);
+
+$.get('http://ipinfo.io', function(response) {
+    var coords = response.loc.split(',', 2);
+    drawForCoords(parseFloat(coords[0]), parseFloat(coords[1]));
+}, "jsonp");
 
 });

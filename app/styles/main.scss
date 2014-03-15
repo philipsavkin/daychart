@@ -1,5 +1,6 @@
 @import "compass/css3";
 @import "compass/utilities/general/clearfix";
+@import "compass/typography/links/link-colors";
 @import "compass/layout.scss";
 
 @include sticky-footer(40px, "main", "#main-footer", "footer");
@@ -73,7 +74,11 @@ header {
 }
 
 footer {
+    padding-top: 0.5rem;
     @include box-shadow(shade($darkBg, 30%) 0 -2px 3px);
+    a {
+        @include link-colors(white);
+    }
 }
 
 #chart {
