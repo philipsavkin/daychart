@@ -60,6 +60,7 @@ function getData(lat, lon) {
         }
 
         sunCalcData = SunCalc.getTimes(dates[i], lat, lon);
+        console.log('sunset: ' + sunCalcData.sunset + ', sunrise: ' + sunCalcData.sunrise);
         durations[i] = dateDiffSecs(sunCalcData.sunset, sunCalcData.sunrise);
         if (i > 0) {
             diffs[i] = durations[i] - durations[i - 1];
@@ -101,22 +102,22 @@ function drawChart(canvas, dateData) {
     function lineTo(x, y) { ctx.lineTo(x + chartProps.xoffset, y + chartProps.yoffset); }
 
     function formatTime(time) {
-        var mins = Math.floor(time / 60),
-            secs = time - mins * 60,
-            str = '' + mins + ':' + secs;
+        var roundedTime = Math.round(Math.abs(time)),
+            sign = (time < 0) ? '-' : '',
+            mins = Math.floor(roundedTime / 60),
+            secs = Math.round(roundedTime - mins * 60),
+            result = sign + mins + ':' + ((secs < 10) ? '0' : '') + secs;
 
-        return str.length < 4 ? str + '0' : str;
+        return result;
     }
 
-    function drawGrid(step, condition) {
-        var d, y;
-        for (d = step; condition(d, step); d += step) {
-            y = chartProps.yoffset - d * multiplier;
-            ctx.fillText(formatTime(d), 0, y);
-            ctx.moveTo(chartProps.xoffset - 2, y);
-            ctx.lineTo(chartProps.maxWidth, y);
-        }
+    function drawValueBar(val) {
+        var y = chartProps.yoffset - val * multiplier;
+        ctx.moveTo(chartProps.xoffset - 2, y);
+        ctx.lineTo(chartProps.maxWidth, y);
+        ctx.fillText(formatTime(val), 0, y);
     }
+
 
     // clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -134,15 +135,17 @@ function drawChart(canvas, dateData) {
     ctx.lineTo(chartProps.xoffset, chartProps.maxHeight);
     ctx.moveTo(chartProps.xoffset - 5, chartProps.yoffset);
     lineTo(chartProps.maxWidth, 0);
-    ctx.fillText('0', 0, chartProps.yoffset);
+    ctx.fillText('0', 0, chartProps.yoset);
     ctx.stroke();
 
+    // Max and min lines
     ctx.beginPath();
-    ctx.strokeStyle = '#ccc';
-    ctx.fillStyle = '#888';
+    ctx.strokeStyle = '#888';
 
-    drawGrid(chartProps.gridStep,  function (d, step) { return d < (max + step); });
-    drawGrid(-chartProps.gridStep, function (d, step) { return d > (min + step); });
+    drawValueBar(max);
+    drawValueBar(max / 2);
+    drawValueBar(min);
+    drawValueBar(min / 2);
 
     ctx.stroke();
 
@@ -150,7 +153,7 @@ function drawChart(canvas, dateData) {
     xstep = (chartProps.maxWidth - chartProps.xoffset) / data.length;
 
     ctx.beginPath();
-    ctx.strokeStyle = '#00f';
+    ctx.strokeStyle = '#06c';
     ctx.lineWidth = 0.5;
     for (i = 0; i < dateData.events.length; i++) {
         e = chartProps.xoffset + xstep * dateData.events[i];
@@ -161,7 +164,7 @@ function drawChart(canvas, dateData) {
 
     // mark today's date
     ctx.beginPath();
-    ctx.strokeStyle = '#f00';
+    ctx.strokeStyle = '#f40';
     e = chartProps.xoffset + xstep * dateData.today;
     ctx.moveTo(e, 0);
     ctx.lineTo(e, chartProps.maxHeight);
