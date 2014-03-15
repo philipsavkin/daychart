@@ -2,12 +2,14 @@
 @import "compass/utilities/general/clearfix";
 @import "compass/layout.scss";
 
-@include sticky-footer(60px, "main", "#main-footer", "footer");
+@include sticky-footer(40px, "main", "#main-footer", "footer");
+
+$darkBg: #609060;
 
 body {
-    background: #fafafa;
+    background: #fafffa;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #333;
+    color: #444;
 }
 
 *, *:before, *:after {
@@ -16,7 +18,6 @@ body {
 
 .container {
     margin: 0 auto;
-    //max-width: 48rem;
     width: 1024px;
 }
 
@@ -24,12 +25,17 @@ body {
     width: 250px;
     float: left;
     margin-left: 18px;
+
+    p {
+        font-size: 0.8rem;
+    }
 }
 
 .point-info {
     background-color: #fff;
     padding: 1rem;
     @include box-shadow(#888 1px 2px 4px);
+    border-top: 1px solid #ccc;
 
     strong {
         display: inline-block;
@@ -44,24 +50,30 @@ body {
         padding: 0;
     }
     .red {
-        color: red;
+        color: #f40;
     }
     .blue {
-        color: blue;
+        color: #06c;
     }
 }
 
+header, footer {
+    color: white;
+    background-color: $darkBg;
+}
+
 header {
-    border-bottom: 1px solid #888;
+    @include box-shadow(shade($darkBg, 50%) 0 2px 3px);
 
     h1 {
+        display: inline-block;
         font-size: 1.5rem;
-        margin: 0;
+        margin: 0.5rem 2rem 0.5rem 0;
     }
 }
 
 footer {
-    background-color: #888;
+    @include box-shadow(shade($darkBg, 30%) 0 -2px 3px);
 }
 
 #chart {
@@ -76,7 +88,7 @@ footer {
 }
 
 .row {
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     @include clearfix;
 }
 

@@ -187,7 +187,7 @@ function drawChart(canvas, dateData) {
     // draw data
     ctx.beginPath();
     ctx.lineWidth = 3;
-    ctx.strokeStyle = 'rgba(151,187,205,1)';
+    ctx.strokeStyle = 'rgba(0,128,0,0.5)';
     ctx.moveTo(chartProps.xoffset, chartProps.yoffset - data[0] * multiplier);
     for (i = 1; i < data.length; i++) {
         lineTo(i * xstep, -data[i] * multiplier);
