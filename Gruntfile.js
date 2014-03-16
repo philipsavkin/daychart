@@ -156,6 +156,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 options: {
+                    httpImagesPath: '../images',
+                    httpGeneratedImagesPath: '../images/generated',
                     generatedImagesDir: '<%= yeoman.dist %>/images/generated'
                 }
             },
@@ -216,7 +218,7 @@ module.exports = function (grunt) {
         // Performs rewrites based on rev and the useminPrepare configuration
         usemin: {
             options: {
-                assetsDirs: ['<%= yeoman.dist %>']
+                assetsDirs: ['<%= yeoman.dist %>', '<%= yeoman.dist %>/images']
             },
             html: ['<%= yeoman.dist %>/{,*/}*.html'],
             css: ['<%= yeoman.dist %>/styles/{,*/}*.css']
@@ -248,7 +250,7 @@ module.exports = function (grunt) {
                 options: {
                     collapseBooleanAttributes: true,
                     collapseWhitespace: false,
-                    removeAttributeQuotes: true,
+                    removeAttributeQuotes: false,
                     removeCommentsFromCDATA: true,
                     removeEmptyAttributes: true,
                     removeOptionalTags: true,
