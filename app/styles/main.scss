@@ -3,105 +3,124 @@
 @import "compass/typography/links/link-colors";
 @import "compass/layout.scss";
 
-@include sticky-footer(60px, "main", "#main-footer", "footer");
+@include sticky-footer(40px, "main", "#main-footer", "footer");
 
 $darkBg: #609060;
 
 body {
-    background: #fafffa;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    color: #444;
+  background: #fafffa;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #444;
 }
 
 *, *:before, *:after {
-    @include box-sizing(border-box);
+  @include box-sizing(border-box);
 }
 
 .container {
-    margin: 0 auto;
-    width: 1024px;
+  margin: 0 auto;
+  width: 1024px;
 }
 
 .right-column {
-    width: 250px;
-    float: left;
-    margin-left: 18px;
+  width: 250px;
+  float: left;
+  margin-left: 18px;
 
-    p {
-        font-size: 0.8rem;
-    }
+  h2 {
+    font-size: 1.3rem;
+    margin-top: 2rem;
+  }
+
+  p {
+    text-align: justify;
+    text-indent: 0.5rem;
+  }
 }
 
 .point-info {
-    background-color: #fff;
-    padding: 1rem;
-    @include box-shadow(#888 1px 2px 4px);
-    border-top: 1px solid #ccc;
+  background-color: #fff;
+  padding: 1rem;
+  @include box-shadow(#888 1px 2px 4px);
+  border-top: 1px solid #ccc;
 
-    strong {
-        display: inline-block;
-        width: 5rem;
-    }
+  strong {
+    display: inline-block;
+    width: 5rem;
+  }
 }
 
 .legend {
-    font-size: 0.8rem;
-    ul {
-        margin: 20px 0 0 18px;
-        padding: 0;
-    }
-    .red {
-        color: #f40;
-    }
-    .blue {
-        color: #06c;
-    }
+  font-size: 0.8rem;
+  ul {
+    margin: 20px 0 0 18px;
+    padding: 0;
+  }
+  .red {
+    color: #f40;
+  }
+  .blue {
+    color: #06c;
+  }
 }
 
 header, footer {
-    color: white;
-    background-color: $darkBg;
+  color: white;
+  background-color: $darkBg;
+  a {
+    @include link-colors(white);
+  }
 }
 
 header {
-    @include box-shadow(shade($darkBg, 50%) 0 2px 3px);
+  @include box-shadow(shade($darkBg, 50%) 0 2px 3px);
 
-    h1 {
-        display: inline-block;
-        font-size: 1.5rem;
-        margin: 0.5rem 2rem 0.5rem 0;
-    }
+  h1 {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin: 0.5rem 2rem 0.5rem 0;
+  }
+
+  a {
+    float: right;
+    padding-left: 2.5rem;
+    background: image-url('GitHub-Mark-Light-32px.png') no-repeat;
+    line-height: 32px;
+    margin-top: 8px;
+  }
 }
 
 footer {
-    padding-top: 0.5rem;
-    @include box-shadow(shade($darkBg, 30%) 0 -2px 3px);
-    a {
-        @include link-colors(white);
-    }
+  padding-top: 0.5rem;
+  font-size: 0.8rem;
+  @include box-shadow(shade($darkBg, 30%) 0 -2px 3px);
+}
+
+main #main-footer {
+  height: 60px;
 }
 
 #chart {
-    display: block;
-    float: left;
+  display: block;
+  float: left;
 }
 
 #map {
-    width: 750px;
-    height: 600px;
-    float: left;
+  width: 750px;
+  height: 600px;
+  float: left;
 }
 
 .row {
-    margin-top: 1.5rem;
-    @include clearfix;
+  margin-top: 1.5rem;
+  @include clearfix;
 }
 
 .browsehappy {
-    margin: 0.2em 0;
-    background: #ccc;
-    color: #000;
-    padding: 0.2em 0;
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
 }
 
 .leaflet-container {
